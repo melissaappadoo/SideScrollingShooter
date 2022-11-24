@@ -4,10 +4,11 @@ using System.Collections;
 public class VertProjectile : MonoBehaviour 
 {
 	public float speed;
-	
+
 	void Update () 
 	{
-		transform.position = new Vector2(transform.position.x, transform.position.y + (speed * Time.deltaTime));
+		//transform.position = new Vector2(transform.position.x, transform.position.y + (speed * Time.deltaTime));
+		transform.Translate(Vector3.right * Time.deltaTime * speed);
 	}
 	
 	void OnBecameInvisible()

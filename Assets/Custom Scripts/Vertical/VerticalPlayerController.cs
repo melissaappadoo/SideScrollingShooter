@@ -8,13 +8,15 @@ public class VerticalPlayerController : MonoBehaviour
 	public float maxSpeed;
 	public float moveForce;
 	public float fireRate;
+	public float Damage;
+	public LayerMask whatToHit;
 	
 	protected float horizVelocity;
 	protected float vertVelocity;
 	protected Rigidbody2D myRigidbody;
 	
 	protected bool firing;
-	protected float fireTimer;	
+	float timeToFire = 0;	
 	
 	protected VerticalPushCamera cam;
 	
@@ -29,29 +31,48 @@ public class VerticalPlayerController : MonoBehaviour
 	{
 		transform.position = new Vector2(transform.position.x, transform.position.y + (cam.speed * Time.deltaTime));
 		
-		if (firing == true)
-		{
-			fireTimer += Time.deltaTime;
-			
-			if (fireTimer >= fireRate)
-			{
-				firing = false;
-				fireTimer = 0;	
-			}	
-		}
-		
-		if (Input.GetButton("Fire1") && firing == false)
-		{
-			/*Instantiate (projectile, firePoint1.position, transform.rotation);
-			Instantiate (projectile, firePoint2.position, transform.rotation);*/
-
-			Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, 0);
-			firing = true;
-		}
+		if (fireRate == 0)
+        {
+			if (Input.GetButtonDown("Fire1"))
+            {
+				Shoot();
+            }
+        }
+		else
+        {
+			if (Input.GetButton("Fire1") && Time.time > timeToFire)
+            {
+				timeToFire = Time.time + 1 / timeToFire;
+				Shoot();
+			}
+        }
 		
 		horizVelocity = Input.GetAxis("Horizontal");
 		vertVelocity = Input.GetAxis("Vertical");
 	}
+
+	void Shoot()
+    {
+		Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+		Vector2 firePointPosition1 = new Vector2(firePoint1.position.x, firePoint1.position.y);
+		Vector2 firePointPosition2 = new Vector2(firePoint2.position.x, firePoint2.position.y);
+		RaycastHit2D hit1 = Physics2D.Raycast(firePointPosition1, mousePosition - firePointPosition1, 100, whatToHit);
+		RaycastHit2D hit2 = Physics2D.Raycast(firePointPosition2, mousePosition - firePointPosition2, 100, whatToHit);
+		Effect();
+		Debug.DrawLine(firePointPosition1, (mousePosition - firePointPosition1) * 100, Color.cyan);
+		Debug.DrawLine(firePointPosition2, (mousePosition - firePointPosition2) * 100, Color.cyan);
+		if (hit1.collider != null)
+        {
+			Debug.DrawLine(firePointPosition1, hit1.point, Color.red);
+			Debug.DrawLine(firePointPosition1, hit2.point, Color.red);
+		}
+	}
+
+	void Effect()
+    {
+		Instantiate(projectile, firePoint1.position, firePoint1.rotation);
+		Instantiate(projectile, firePoint2.position, firePoint2.rotation);
+    }
 	
 	void FixedUpdate()
 	{
