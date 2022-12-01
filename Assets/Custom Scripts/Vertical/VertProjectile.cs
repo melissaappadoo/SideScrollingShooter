@@ -8,7 +8,7 @@ public class VertProjectile : MonoBehaviour
 	void Update () 
 	{
 		//transform.position = new Vector2(transform.position.x, transform.position.y + (speed * Time.deltaTime));
-		transform.Translate(Vector3.right * Time.deltaTime * speed);
+		transform.Translate(Vector3.up * Time.deltaTime * speed);
 	}
 	
 	void OnBecameInvisible()
