@@ -9,6 +9,8 @@ public class HealthComponent : MonoBehaviour
     public Image healthBar;
     public bool hasHealthBar;
 
+    public GameManager gm;
+
     // Update is called once per frame
     void Update()
     {
@@ -24,7 +26,7 @@ public class HealthComponent : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            //gm.RespawnPlayer();
+            gm.RespawnPlayer();
         }
     }
 }

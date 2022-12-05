@@ -6,14 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
 
-    void Start()
-    {
-        /*if (gm == null)
-        {
-            gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameManager>;
-        }*/
-    }
-
     public Transform playerPrefab;
     public Transform spawnPoint;
 
