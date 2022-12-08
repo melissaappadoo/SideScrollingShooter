@@ -8,9 +8,12 @@ public class GameManager : MonoBehaviour
 
     public Transform playerPrefab;
     public Transform spawnPoint;
+    public int spawnDelay = 2;
 
-    public void RespawnPlayer ()
+    public IEnumerator RespawnPlayer ()
     {
+        yield return new WaitForSeconds(spawnDelay);
+
         Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 }

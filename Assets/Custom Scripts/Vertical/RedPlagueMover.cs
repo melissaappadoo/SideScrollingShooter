@@ -15,7 +15,7 @@ public class RedPlagueMover : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		transform.position = new Vector2(origXPos + maxXOffset * Mathf.Sin(Time.time), transform.position.y  - (vSpeed * Time.deltaTime));
+		//transform.position = new Vector2(origXPos + maxXOffset * Mathf.Sin(Time.time), transform.position.y  - (vSpeed * Time.deltaTime));
 	}
 	
 	void OnTriggerEnter2D(Collider2D other)
