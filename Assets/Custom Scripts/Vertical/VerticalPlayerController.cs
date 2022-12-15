@@ -16,7 +16,7 @@ public class VerticalPlayerController : MonoBehaviour
 	protected Rigidbody2D myRigidbody;
 	
 	protected bool firing;
-	float timeToFire = 0;	
+	float currentTime = 0;	
 	
 	protected VerticalPushCamera cam;
 	
@@ -31,21 +31,12 @@ public class VerticalPlayerController : MonoBehaviour
 	{
 		transform.position = new Vector2(transform.position.x, transform.position.y + (cam.speed * Time.deltaTime));
 		
-		if (fireRate == 0)
+		if (Input.GetButtonDown("Fire1") && currentTime <= 0)
         {
-			if (Input.GetButtonDown("Fire1"))
-            {
-				Shoot();
-            }
+			Shoot();
+			currentTime = fireRate;
         }
-		else
-        {
-			if (Input.GetButton("Fire1") && Time.time > timeToFire)
-            {
-				timeToFire = Time.time + 1 / timeToFire;
-				Shoot();
-			}
-        }
+		currentTime -= Time.deltaTime;
 		
 		horizVelocity = Input.GetAxis("Horizontal");
 		vertVelocity = Input.GetAxis("Vertical");
