@@ -15,14 +15,14 @@ public class ButterflyMover : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		transform.position = new Vector2(transform.position.x - (hSpeed * Time.deltaTime), origYPos + maxYOffset * Mathf.Sin(Time.time));
+		//transform.position = new Vector2(transform.position.x - (hSpeed * Time.deltaTime), origYPos + maxYOffset * Mathf.Sin(Time.time));
 	}
 	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Player")
+		if (other.GetComponent<HealthComponent>() != null)
 		{
-			Destroy (other.gameObject);
+			other.GetComponent<HealthComponent>().TakeDamage(20);
 		}
 	}
 }

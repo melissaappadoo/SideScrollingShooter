@@ -26,7 +26,15 @@ public class HealthComponent : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            gm.StartCoroutine(gm.RespawnPlayer());
+            gm.remainingLives -= 1;
+            if (gm.remainingLives <= 0)
+            {
+                gm.EndGame();
+            }
+            else
+            {
+                gm.StartCoroutine(gm.RespawnPlayer());
+            }
         }
     }
 }
